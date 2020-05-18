@@ -133,7 +133,7 @@ public class activities_reg extends AppCompatActivity {
         String finalmessage="";
         String failed="";
         status= Arrays.asList(message.split("-"));
-     for (int i=0;i<status.size();i++){
+        for (int i=0;i<status.size();i++){
             if(status.get(i).split(":")[1].equals("successfully registered")){
                 finalmessage=finalmessage+status.get(i)+"\n";
             }else{
@@ -154,7 +154,7 @@ public class activities_reg extends AppCompatActivity {
                     startActivity(I);
                 }
             });
-        alertDialog.setButton(DialogInterface.BUTTON_NEGATIVE, "Add Another Registration", new DialogInterface.OnClickListener(){
+        alertDialog.setButton(DialogInterface.BUTTON_NEGATIVE, "Add Another Student Registration", new DialogInterface.OnClickListener(){
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 Intent I=new Intent(activities_reg.this, addstudent.class);
@@ -163,5 +163,18 @@ public class activities_reg extends AppCompatActivity {
             }
         });
         alertDialog.show();
+    }
+    @Override
+    public void onBackPressed() {
+
+        if(isTaskRoot()){
+            // this block disable back button
+
+        }else{
+            // this block enable back button
+            super.onBackPressed();
+
+        }
+
     }
 }

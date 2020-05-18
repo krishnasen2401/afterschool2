@@ -34,6 +34,8 @@ baseurl bs=new baseurl();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        Log.d("extra",getIntent().getStringExtra("activity"));
         setContentView(R.layout.activity_main_attendane);
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(bs.getBaseUrl())

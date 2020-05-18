@@ -7,10 +7,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.os.Bundle;
 import android.widget.Toast;
 
-import com.butterfliesmonti.afterschool.Adapters.student_list_adapter;
+import com.butterfliesmonti.afterschool.Adapters.student_list_adapter_lvl1;
 import com.butterfliesmonti.afterschool.R;
-import com.butterfliesmonti.afterschool.apicalls.RetrofitClient;
-import com.butterfliesmonti.afterschool.models.studentslist;
+import com.butterfliesmonti.afterschool.baseurl;
+import com.butterfliesmonti.afterschool.models.Studentdata_list;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,36 +18,50 @@ import java.util.List;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.http.GET;
 
 public class student_list extends AppCompatActivity {
-    List<studentslist> studentslists1;
     private RecyclerView mRecyclerView;
     private RecyclerView.LayoutManager mLayoutManager;
-    private student_list_adapter madapter;
-
-    private void getStudentListResponse(){
-        Call<List<studentslist>> call= RetrofitClient.getInstance().get_Api_Student_fetch().getactitivitesJson("list");
-        call.enqueue(new Callback<List<studentslist>>() {
-            @Override
-            public void onResponse(Call<List<studentslist>> call, Response<List<studentslist>> response) {
-                studentslists1=new ArrayList<>(response.body());
-                mRecyclerView=findViewById(R.id.rvStudentList);
-                mLayoutManager = new LinearLayoutManager(student_list.this,LinearLayoutManager.VERTICAL,false);
-                mRecyclerView.setLayoutManager(mLayoutManager);
-                madapter = new student_list_adapter(studentslists1, getApplicationContext(),mRecyclerView);
-                mRecyclerView.setAdapter(madapter);
-            }
-
-            @Override
-            public void onFailure(Call<List<studentslist>> call, Throwable t) {
-                Toast.makeText(student_list.this,"Failed",Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
+    private student_list_adapter_lvl1 madapter;
+    baseurl bs=new baseurl();
+    Retrofit retrofit;
+    List<Studentdata_list> studentdata_lists;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_student_list);
-        getStudentListResponse();
+        mRecyclerView=findViewById(R.id.rvStudentListTest);
+        mLayoutManager = new LinearLayoutManager(student_list.this,LinearLayoutManager.VERTICAL,false);
+        mRecyclerView.setLayoutManager(mLayoutManager);
+        retrofit = new Retrofit.Builder()
+                .baseUrl(bs.getBaseUrl())
+                .addConverterFactory(GsonConverterFactory.create())//mention which conveter we are using for fetch
+                .build();
+        Api_studentdata_fetch service=retrofit.create(Api_studentdata_fetch.class);
+        Call<List<Studentdata_list>> call= service.getstudentdatajson();
+        call.enqueue(new Callback<List<Studentdata_list>>() {
+            @Override
+            public void onResponse(Call<List<Studentdata_list>> call, Response<List<Studentdata_list>> response) {
+                studentdata_lists=new ArrayList<>(response.body());
+                invokemadapter();
+            }
+            @Override
+            public void onFailure(Call<List<Studentdata_list>> call, Throwable t) {
+                Toast.makeText(student_list.this,"Failed",Toast.LENGTH_SHORT).show();
+            }
+        });
     }
+
+    void invokemadapter(){
+        madapter = new student_list_adapter_lvl1(studentdata_lists, getApplicationContext(),mRecyclerView);
+        mRecyclerView.setAdapter(madapter);
+    }
+
+}
+interface Api_studentdata_fetch {
+    @GET("studentdata.php")
+    Call<List<Studentdata_list>> getstudentdatajson();
 }

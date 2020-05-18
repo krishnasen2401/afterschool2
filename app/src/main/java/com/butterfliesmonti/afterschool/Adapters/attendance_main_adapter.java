@@ -25,7 +25,7 @@ public class attendance_main_adapter extends RecyclerView.Adapter<attendance_mai
                                                               int viewType) {
         LayoutInflater inflater = LayoutInflater.from(
                 parent.getContext());
-        View v = inflater.inflate(R.layout.row_studentlist, parent, false);
+        View v = inflater.inflate(R.layout.row_singletextbox, parent, false);
         ViewHolder vh = new ViewHolder(v);
         return vh;
     }
@@ -59,12 +59,11 @@ public class attendance_main_adapter extends RecyclerView.Adapter<attendance_mai
             @Override
             public void onClick(View v) {
                 Intent i=new Intent(v.getContext(), attendance_out.class);
-                i.putExtra("activityname",al.getActivityName());
+                 i.putExtra("activityname",al.getActivityName());
                 v.getContext().startActivity(i);
             }
         });
 
-        Log.d("length-bindvieholder", String.valueOf(mlists.size()));
     }
 
 }

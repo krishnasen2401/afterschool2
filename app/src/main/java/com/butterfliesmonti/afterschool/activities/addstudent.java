@@ -96,7 +96,7 @@ String message,studentid;
             studentid=message.split("-")[1].trim();
         alertDialog.setMessage("Do you want to added a record or register a course");
         alertDialog.setCancelable(false);
-        alertDialog.setButton(DialogInterface.BUTTON_POSITIVE, "Enter", new DialogInterface.OnClickListener(){
+        alertDialog.setButton(DialogInterface.BUTTON_POSITIVE, "Continue With Course Registration", new DialogInterface.OnClickListener(){
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 Intent I=new Intent(addstudent.this, activities_reg.class);
@@ -105,6 +105,15 @@ String message,studentid;
                 startActivity(I);
             }
         });
+            alertDialog.setButton(DialogInterface.BUTTON_NEUTRAL,"Enter Another Student Registration",new DialogInterface.OnClickListener(){
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    finish();
+                    overridePendingTransition(0, 0);
+                    startActivity(getIntent());
+                    overridePendingTransition(0, 0);
+                }
+            });
         alertDialog.setButton(DialogInterface.BUTTON_NEGATIVE,"Home",new DialogInterface.OnClickListener(){
             @Override
             public void onClick(DialogInterface dialog, int which) {

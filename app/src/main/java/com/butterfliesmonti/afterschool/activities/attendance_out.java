@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -15,14 +16,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.butterfliesmonti.afterschool.Adapters.student_list_adapter_attendance;
+import com.butterfliesmonti.afterschool.MainActivity;
 import com.butterfliesmonti.afterschool.R;
 import com.butterfliesmonti.afterschool.baseurl;
 import com.butterfliesmonti.afterschool.models.student_regs_list;
 import com.google.gson.Gson;
 
-import org.w3c.dom.Text;
-
 import java.io.IOException;
+import java.text.MessageFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -59,7 +60,7 @@ public class attendance_out extends AppCompatActivity {
         tvdate.setText(Dateatt);
         retrofit = new Retrofit.Builder()
                 .baseUrl(bs.getBaseUrl())
-                .addConverterFactory(GsonConverterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create())//mention which conveter we are using for fetch
                 .build();
         Api_students_fetch_solo service=retrofit.create(Api_students_fetch_solo.class);
         Call<List<student_regs_list>> call= service.getstudentNameJson("studentlist",i.getStringExtra("activityname"));
@@ -112,7 +113,27 @@ Api_attendance_out_solo service=retrofit.create(Api_attendance_out_solo.class);
         public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
             try {
                 String message = response.body().string();
-                Log.d("message",message);
+                AlertDialog alertDialog = new AlertDialog.Builder(attendance_out.this).create();
+                alertDialog.setTitle("Attendance Output");
+                alertDialog.setMessage(message);
+                alertDialog.setCancelable(false);
+                alertDialog.setButton(DialogInterface.BUTTON_POSITIVE, "Go Home", new DialogInterface.OnClickListener(){
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Intent I=new Intent(attendance_out.this, MainActivity.class);
+                        I.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        startActivity(I);
+                    }
+                });
+                alertDialog.setButton(DialogInterface.BUTTON_NEGATIVE, "Add Attendance for Another Activity", new DialogInterface.OnClickListener(){
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Intent I=new Intent(attendance_out.this,main_attendance.class);
+                        I.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        startActivity(I);
+                    }
+                });
+                alertDialog.show();
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -126,6 +147,8 @@ Api_attendance_out_solo service=retrofit.create(Api_attendance_out_solo.class);
         }
     });
 }
+
+
 }
 interface Api_students_fetch_solo {
     @FormUrlEncoded

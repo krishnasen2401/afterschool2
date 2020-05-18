@@ -1,10 +1,6 @@
 package com.butterfliesmonti.afterschool.Adapters;
 
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,9 +9,7 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.butterfliesmonti.afterschool.R;
-import com.butterfliesmonti.afterschool.activities.activities_reg;
 import com.butterfliesmonti.afterschool.models.student_regs_list;
-import com.butterfliesmonti.afterschool.models.studentslist;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,11 +20,11 @@ public class student_list_adapter_attendance extends RecyclerView.Adapter<studen
     private List<student_regs_list> selectedlist;
     private RecyclerView mRecyclerV1;
 
-    public student_list_adapter_attendance.ViewHolder onCreateViewHolder(ViewGroup parent,
+    public ViewHolder onCreateViewHolder(ViewGroup parent,
                                                                          int viewType) {
         LayoutInflater inflater = LayoutInflater.from(
                 parent.getContext());
-        View v = inflater.inflate(R.layout.row_studentlist, parent, false);
+        View v = inflater.inflate(R.layout.row_singletextbox, parent, false);
         selectedlist=new ArrayList<>();
         ViewHolder vh = new ViewHolder(v);
         return vh;
