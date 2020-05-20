@@ -3,6 +3,7 @@ package com.butterfliesmonti.afterschool.activities;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.SimpleItemAnimator;
 
 import android.os.Bundle;
 import android.widget.Toast;
@@ -35,6 +36,8 @@ public class student_list extends AppCompatActivity {
         setContentView(R.layout.activity_student_list);
         mRecyclerView=findViewById(R.id.rvStudentListTest);
         mLayoutManager = new LinearLayoutManager(student_list.this,LinearLayoutManager.VERTICAL,false);
+        ((SimpleItemAnimator) mRecyclerView.getItemAnimator()).setSupportsChangeAnimations(false);
+
         mRecyclerView.setLayoutManager(mLayoutManager);
         retrofit = new Retrofit.Builder()
                 .baseUrl(bs.getBaseUrl())

@@ -11,6 +11,15 @@ public class Studentdata_list {
         @SerializedName("activity list")
         @Expose
         private List<String> activityList = null;
+        private boolean expanded;
+
+    public void setExpanded(boolean expanded) {
+        this.expanded = expanded;
+    }
+
+    public boolean isExpanded() {
+        return expanded;
+    }
 
         public String getStudentname() {
             return studentname;
