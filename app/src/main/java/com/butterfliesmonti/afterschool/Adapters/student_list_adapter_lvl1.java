@@ -1,6 +1,8 @@
 package com.butterfliesmonti.afterschool.Adapters;
 
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -9,10 +11,12 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.butterfliesmonti.afterschool.R;
+import com.butterfliesmonti.afterschool.activities.activities_reg;
 import com.butterfliesmonti.afterschool.models.Studentdata_list;
 
 import java.util.List;
@@ -54,6 +58,12 @@ public class student_list_adapter_lvl1 extends RecyclerView.Adapter<student_list
         holder.studentlist.setText("Student Name:-" + al.getStudentname());
         holder.madapter2 = new student_list_adapter_lvl2(al.getActivityList(),mContext1,holder.mRecyclerView2);
         holder.mRecyclerView2.setAdapter(holder.madapter2);
+        holder.studentlist.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertLauncher(al,v);
+            }
+        });
         holder.imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -87,6 +97,29 @@ public class student_list_adapter_lvl1 extends RecyclerView.Adapter<student_list
         mlists = myDataset;
         mContext1 = context;
         mRecyclerV1 = recyclerView;
+    }
+    public void AlertLauncher(Studentdata_list st,View v) {
+        AlertDialog alertDialog = new AlertDialog.Builder(v.getContext()).create();
+        alertDialog.setTitle("Action Needed");
+        alertDialog.setMessage("Do you want to register a course or check profile");
+        alertDialog.setCancelable(false);
+        alertDialog.setButton(DialogInterface.BUTTON_POSITIVE, "Register Course", new DialogInterface.OnClickListener(){
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Intent I = new Intent(v.getContext(), activities_reg.class);
+                I.putExtra("stname", st.getStudentname());
+                I.putExtra("stid", st.getStudentid());
+                v.getContext().startActivity(I);
+            }
+        });
+        alertDialog.setButton(DialogInterface.BUTTON_NEGATIVE, "Go to Profile", new DialogInterface.OnClickListener(){
+
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                //nothing to be done here required when back button is set false i.e setscancelable false
+            }
+        });
+        alertDialog.show();
     }
 
 }

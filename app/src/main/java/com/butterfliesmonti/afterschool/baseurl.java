@@ -2,6 +2,6 @@ package com.butterfliesmonti.afterschool;
 
 public class baseurl {
    public String getBaseUrl(){
-       return "http://10.0.2.2/afterschool/";
+       return "http://192.168.0.107/afterschool/";
    }
 }

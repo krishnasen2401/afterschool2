@@ -5,6 +5,9 @@ import com.google.gson.annotations.SerializedName;
 
 public class Studentdata_list {
 
+        @SerializedName("studentid")
+        @Expose
+        private String studentid;
         @SerializedName("studentname")
         @Expose
         private String studentname;
@@ -20,6 +23,9 @@ public class Studentdata_list {
     public boolean isExpanded() {
         return expanded;
     }
+
+    public String getStudentid() { return studentid; }
+    public void setStudentid(String studentid) { this.studentid = studentid; }
 
         public String getStudentname() {
             return studentname;

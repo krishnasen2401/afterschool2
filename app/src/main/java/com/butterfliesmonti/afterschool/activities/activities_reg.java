@@ -154,6 +154,14 @@ public class activities_reg extends AppCompatActivity {
                     startActivity(I);
                 }
             });
+        alertDialog.setButton(DialogInterface.BUTTON_NEUTRAL, "Go To Student List", new DialogInterface.OnClickListener(){
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Intent I=new Intent(activities_reg.this, student_list.class);
+                I.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(I);
+            }
+        });
         alertDialog.setButton(DialogInterface.BUTTON_NEGATIVE, "Add Another Student Registration", new DialogInterface.OnClickListener(){
             @Override
             public void onClick(DialogInterface dialog, int which) {
