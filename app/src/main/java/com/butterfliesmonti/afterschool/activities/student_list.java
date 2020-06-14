@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.SimpleItemAnimator;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.butterfliesmonti.afterschool.Adapters.student_list_adapter_lvl1;
@@ -49,6 +50,7 @@ public class student_list extends AppCompatActivity {
             @Override
             public void onResponse(Call<List<Studentdata_list>> call, Response<List<Studentdata_list>> response) {
                 studentdata_lists=new ArrayList<>(response.body());
+                Log.d("code", String.valueOf(response.code()));
                 invokemadapter();
             }
             @Override

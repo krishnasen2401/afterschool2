@@ -3,7 +3,6 @@ package com.butterfliesmonti.afterschool.Adapters;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.drawable.BitmapDrawable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -56,7 +55,7 @@ public class student_list_adapter_lvl1 extends RecyclerView.Adapter<student_list
         Log.d("expanded", String.valueOf(expanded));
         holder.mRecyclerView2.setVisibility(expanded ? View.VISIBLE : View.GONE);
         holder.studentlist.setText("Student Name:-" + al.getStudentname());
-        holder.madapter2 = new student_list_adapter_lvl2(al.getActivityList(),mContext1,holder.mRecyclerView2);
+        holder.madapter2 = new student_list_adapter_lvl2(al.getActivityList(),mContext1,holder.mRecyclerView2,al.getStudentid());
         holder.mRecyclerView2.setAdapter(holder.madapter2);
         holder.studentlist.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -110,13 +109,6 @@ public class student_list_adapter_lvl1 extends RecyclerView.Adapter<student_list
                 I.putExtra("stname", st.getStudentname());
                 I.putExtra("stid", st.getStudentid());
                 v.getContext().startActivity(I);
-            }
-        });
-        alertDialog.setButton(DialogInterface.BUTTON_NEGATIVE, "Go to Profile", new DialogInterface.OnClickListener(){
-
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                //nothing to be done here required when back button is set false i.e setscancelable false
             }
         });
         alertDialog.show();

@@ -90,7 +90,7 @@ String message,studentid;
         });
     }
     public void AlertLauncher(){
-        AlertDialog alertDialog = new AlertDialog.Builder(this).create();
+        AlertDialog alertDialog = new AlertDialog.Builder(this,R.style.AppTheme).create();
         alertDialog.setTitle(message);
         if(message.split("-")[0].trim().equals("Entry successfully created")){
             studentid=message.split("-")[1].trim();
